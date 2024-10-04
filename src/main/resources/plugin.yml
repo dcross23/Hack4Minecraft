@@ -1,0 +1,6 @@
+name: PluginDemo
+main: com.briangershon.demo.App
+description: Plugin Aprender Computadores I Usal
+version: ${project.version}
+api-version: 1.21
+softdepend: [Multiverse-Core, DecentHolograms, WorldGuard]
