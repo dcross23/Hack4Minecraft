@@ -53,6 +53,9 @@ public class App extends JavaPlugin implements Listener {
         return plugin;
     }
 
+    private boolean s1, s2, s3;
+    private String msg;
+
     @Override
     public void onEnable() {
 
@@ -121,7 +124,7 @@ public class App extends JavaPlugin implements Listener {
 
         //Crear Holograma
         // Suponiendo que quieres crear el holograma en una ubicación fija
-        Location location = new Location(getServer().getWorld("World"), 29, -50, 105);
+        Location location = new Location(getServer().getWorld("world"), 29, -50, 105);
 
         // Crear el holograma y comenzar a refrescarlo
         if (DHAPI.getHologram("MarcadorGlobal") ==null){
@@ -234,8 +237,10 @@ public class App extends JavaPlugin implements Listener {
 
         }else if (event.getPlayer().getWorld().getName().contains("Ejercicio2")){
             checkEjercicio2(event);
-        }
 
+        }else if (event.getPlayer().getWorld().getName().contains("Ejercicio3")){
+            checkEjercicio3(event);
+        }
 
     }
 
@@ -319,7 +324,7 @@ public class App extends JavaPlugin implements Listener {
         getLogger().info( "El jugador " + player.getName() + " ha atravesado un portal en: X: " + (int) portalLocation.getX()        + " Y: " + (int) portalLocation.getY() + " Z: " + (int) portalLocation.getZ());
 
         // PORTAL A LECCION 1
-        if ((int) portalLocation.getX() == 18  || (int) portalLocation.getX() == 19 && ((int) portalLocation.getY() == -57 && (int) portalLocation.getZ() == -56 ||  (int) portalLocation.getZ() == 82)  || event.getPlayer().getWorld().getName().contains("World")) {
+        if ( ( (int)portalLocation.getX() == 18  || (int)portalLocation.getX() == 19 ) && ( (int)portalLocation.getY() == -56 || (int)portalLocation.getY() == -57 ) && (int)portalLocation.getZ() == 82 && event.getPlayer().getWorld().getName().contains("world")) {
            
             TextComponent parte1 = new TextComponent("Teletransportando al....");
             parte1.setColor(ChatColor.BLUE);
@@ -340,9 +345,9 @@ public class App extends JavaPlugin implements Listener {
             // Imprime las coordenadas del portal en la consola
             getLogger().info( "El jugador " + player.getName() + " ha atravesado un portal en: X: " + (int) portalLocation.getX()        + " Y: " + (int) portalLocation.getY() + " Z: " + (int) portalLocation.getZ());
         
-        }else if ((int) portalLocation.getX() == 53 && ((int) portalLocation.getY() == -60 || (int) portalLocation.getZ() == -96 && event.getPlayer().getWorld().getName().contains("Ejercicio1"))) {
+        }else if ((int)portalLocation.getX() == 53 && ((int)portalLocation.getY() == -59 || (int)portalLocation.getY() == -60) && (int)portalLocation.getZ() == -95 && event.getPlayer().getWorld().getName().contains("Ejercicio1")) {
             // PORTAL DE LECCION 1 A BASE
-            World newWorld = Bukkit.getWorld("World");
+            World newWorld = Bukkit.getWorld("world");
 
             TextComponent parte1 = new TextComponent("Teletransportando ....");
             parte1.setColor(ChatColor.BLUE);
@@ -359,20 +364,20 @@ public class App extends JavaPlugin implements Listener {
             // Teletransportar al jugador al nuevo mundo
             teleportPlayerToNewWorld(player, newWorld);
 
-        }else if (((int) portalLocation.getX() == 39 || (int) portalLocation.getX() == 40) && ((int) portalLocation.getY() == -57  || (int) portalLocation.getY() == -56) &&  (int) portalLocation.getZ() == 82 && event.getPlayer().getWorld().getName().contains("world")) {
+        }else if ( ((int) portalLocation.getX() == 39 || (int) portalLocation.getX() == 40) && ((int) portalLocation.getY() == -57  || (int) portalLocation.getY() == -56) &&  (int) portalLocation.getZ() == 82 && event.getPlayer().getWorld().getName().contains("world")) {
             // PORTAL A LECCION 2
             if (obtenerNivel(player) < 1){
                 // Crear el primer componente de texto
                 TextComponent parte1 = new TextComponent("Teletransportando ....");
                 parte1.setColor(ChatColor.BLUE);
-    
+
                 // Envía un mensaje al jugador (opcional)
                 TextComponent parte2 = new TextComponent("'Haz Primero Los Ejercicios Mas Fáciles!");
                 parte2.setColor(ChatColor.GREEN);
                 parte2.setBold(true);
-    
+
                 parte1.addExtra(parte2);
-    
+
                 player.spigot().sendMessage(parte1);
 
 
@@ -393,6 +398,80 @@ public class App extends JavaPlugin implements Listener {
                 //Clonamos Mundo
                 cloneWorldForPlayer(player,"plantillaEjercicio2");
             }
+
+        }else if ((int)portalLocation.getX() == 53 && ((int)portalLocation.getY() == -59 || (int)portalLocation.getY() == -60) && (int)portalLocation.getZ() == -95 && event.getPlayer().getWorld().getName().contains("Ejercicio2")) {
+            // PORTAL DE LECCION 2 A BASE
+            World newWorld = Bukkit.getWorld("world");
+
+            TextComponent parte1 = new TextComponent("Teletransportando ....");
+            parte1.setColor(ChatColor.BLUE);
+
+            // Envía un mensaje al jugador (opcional)
+            TextComponent parte2 = new TextComponent(" Volviendo a Base!");
+            parte2.setColor(ChatColor.GREEN);
+            parte2.setBold(true);
+
+            parte1.addExtra(parte2);
+
+            player.spigot().sendMessage(parte1);
+
+            // Teletransportar al jugador al nuevo mundo
+            teleportPlayerToNewWorld(player, newWorld);
+
+
+        }else if ((int) portalLocation.getX() == 52 && ((int) portalLocation.getY() == -57  || (int) portalLocation.getY() == -56) &&  ((int) portalLocation.getZ() == 94 || (int) portalLocation.getZ() == 95) && event.getPlayer().getWorld().getName().contains("world")) {
+            // PORTAL A LECCION 3
+            if (obtenerNivel(player) < 2){
+                // Crear el primer componente de texto
+                TextComponent parte1 = new TextComponent("Teletransportando ....");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Envía un mensaje al jugador (opcional)
+                TextComponent parte2 = new TextComponent("'Haz Primero Los Ejercicios Mas Fáciles!");
+                parte2.setColor(ChatColor.GREEN);
+                parte2.setBold(true);
+
+                parte1.addExtra(parte2);
+
+                player.spigot().sendMessage(parte1);
+
+
+
+            } else{
+                TextComponent parte1 = new TextComponent("Teletransportando al....");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Envía un mensaje al jugador (opcional)
+                TextComponent parte2 = new TextComponent(" Ejercicio3!");
+                parte2.setColor(ChatColor.GREEN);
+                parte2.setBold(true);
+
+                parte1.addExtra(parte2);
+
+                player.spigot().sendMessage(parte1);
+
+                //Clonamos Mundo
+                cloneWorldForPlayer(player,"plantillaEjercicio3");
+            }
+
+        }else if ((int)portalLocation.getX() == 53 && ((int)portalLocation.getY() == -59 || (int)portalLocation.getY() == -60) && (int)portalLocation.getZ() == -95 && event.getPlayer().getWorld().getName().contains("Ejercicio3")) {
+            // PORTAL DE LECCION 3 A BASE
+            World newWorld = Bukkit.getWorld("world");
+
+            TextComponent parte1 = new TextComponent("Teletransportando ....");
+            parte1.setColor(ChatColor.BLUE);
+
+            // Envía un mensaje al jugador (opcional)
+            TextComponent parte2 = new TextComponent(" Volviendo a Base!");
+            parte2.setColor(ChatColor.GREEN);
+            parte2.setBold(true);
+
+            parte1.addExtra(parte2);
+
+            player.spigot().sendMessage(parte1);
+
+            // Teletransportar al jugador al nuevo mundo
+            teleportPlayerToNewWorld(player, newWorld);
 
         }else {
 
@@ -1039,5 +1118,238 @@ public class App extends JavaPlugin implements Listener {
         }
     }
 
-    
+    public void checkEjercicio3(PlayerInteractEvent event) {
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            Block block = event.getClickedBlock();
+            // El boton comprobar de la puerta AND del primer recinto
+            if (block != null && (block.getType() == Material.WARPED_BUTTON)
+                    && (block.getX() == 27 && block.getY() == -60 && block.getZ() == -96)) {
+
+                // Crear el primer componente de texto
+                TextComponent parte1 = new TextComponent("¡Comprobando Circuito Modulo Comparador---> ");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Crear el segundo componente de texto
+                TextComponent parte2 = new TextComponent("¡ Se Paciente  !");
+                parte2.setColor(ChatColor.GOLD);
+                parte2.setBold(true);
+
+                parte1.addExtra(parte2);
+                event.getPlayer().spigot().sendMessage(parte1);
+
+                Block inA = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(27, -60, -97);
+                Block inB = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(27, -60, -95);
+
+                Block out1 = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(42, -59, -98);
+                Block out2 = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(42, -59, -96);
+                Block out3 = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(42, -59, -94);
+
+                Bukkit.getScheduler().runTaskLater(this, () -> {
+                    // Movemos Palancas
+                    setLever(inA, false);
+                    setLever(inB, false);
+
+                    // Dejamos un tiempo para que se cambien las palancas
+                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                        parte1.getExtra().clear();
+                        parte1.setText("->");
+
+                        parte1.addExtra("A=0 y B=0 ");
+                        parte1.setColor(ChatColor.YELLOW);
+
+                        Bukkit.getScheduler().runTaskLater(this, () -> {
+                            s1 = (((Lightable) out1.getBlockData()).isLit()) ? true : false;
+                            s2 = (((Lightable) out2.getBlockData()).isLit()) ? true : false;
+                            s3 = (((Lightable) out3.getBlockData()).isLit()) ? true : false;
+
+                            // Si la que no esta encendida es la 2a lampara, mal
+                            if ( s1 || !s2 || s3) {
+                                msg = "(A>B)-" + (s1?"1":"0") + " (a=b)=" + (s2?"1":"0") + " (A<B)=" + (s3?"1":"0") + " [ERROR]";
+                                parte1.addExtra(msg);
+                                parte1.setColor(ChatColor.RED);
+                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                parte1.getExtra().clear();
+
+                                parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                parte1.setBold(true);
+                                event.getPlayer().spigot().sendMessage(parte1);
+
+                            } else {
+                                parte1.addExtra(" ");
+                                msg = "S1=" + (s1?"1":"0") + " S2=" + (s2?"1":"0") + " S3=" + (s3?"1":"0") + " [OK]     [25%]";
+                                parte1.addExtra(msg);
+                                parte1.setColor(ChatColor.YELLOW);
+                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                // Si está bien hacemos siguiente comprobación
+                                // Movemos Palancas Con Un Retardo
+                                Bukkit.getScheduler().runTaskLater(this, () -> {
+                                    // Movemos Palancas
+                                    setLever(inA, false);
+                                    setLever(inB, true);
+
+                                    // Dejamos un tiempo para que se cambien las palancas
+                                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                                        parte1.getExtra().clear();
+                                        parte1.setText("->");
+
+                                        parte1.addExtra("A=0 y B=1 ");
+                                        parte1.setColor(ChatColor.YELLOW);
+
+                                        Bukkit.getScheduler().runTaskLater(this, () -> {
+                                            s1 = (((Lightable) out1.getBlockData()).isLit()) ? true : false;
+                                            s2 = (((Lightable) out2.getBlockData()).isLit()) ? true : false;
+                                            s3 = (((Lightable) out3.getBlockData()).isLit()) ? true : false;
+
+
+                                            if (s1 || s2 || !s3) {
+                                                msg = "(A>B)-" + (s1?"1":"0") + " (a=b)=" + (s2?"1":"0") + " (A<B)=" + (s3?"1":"0") + " [ERROR]";
+                                                parte1.addExtra(msg);
+                                                parte1.setColor(ChatColor.RED);
+                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                parte1.getExtra().clear();
+
+                                                parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                                parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                                parte1.setBold(true);
+                                                event.getPlayer().spigot().sendMessage(parte1);
+                                            } else {
+                                                parte1.addExtra(" ");
+                                                msg = "S1=" + (s1?"1":"0") + " S2=" + (s2?"1":"0") + " S3=" + (s3?"1":"0") + " [OK]     [50%]";
+                                                parte1.addExtra(msg);
+                                                parte1.setColor(ChatColor.YELLOW);
+                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                // Si está bien hacemos siguiente comprobación
+                                                // Movemos Palancas Con Un Retardo
+                                                Bukkit.getScheduler().runTaskLater(getPluginGabri(), () -> {
+                                                    // Movemos Palancas
+                                                    setLever(inA, true);
+                                                    setLever(inB, false);
+
+                                                    // Dejamos un tiempo para que se cambien las palancas
+                                                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                                                        parte1.getExtra().clear();
+                                                        parte1.setText("->");
+
+                                                        parte1.addExtra("A=1 y B=0 ");
+                                                        parte1.setColor(ChatColor.YELLOW);
+
+                                                        Bukkit.getScheduler().runTaskLater(this, () -> {
+                                                            s1 = (((Lightable) out1.getBlockData()).isLit()) ? true : false;
+                                                            s2 = (((Lightable) out2.getBlockData()).isLit()) ? true : false;
+                                                            s3 = (((Lightable) out3.getBlockData()).isLit()) ? true : false;
+
+                                                            if (!s1 || s2 || s3) {
+                                                                msg = "(A>B)-" + (s1?"1":"0") + " (a=b)=" + (s2?"1":"0") + " (A<B)=" + (s3?"1":"0") + " [ERROR]";
+                                                                parte1.addExtra(msg);
+                                                                parte1.setColor(ChatColor.RED);
+                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                parte1.getExtra().clear();
+
+                                                                parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                                                parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                                                parte1.setBold(true);
+                                                                event.getPlayer().spigot().sendMessage(parte1);
+                                                            } else {
+                                                                parte1.addExtra(" ");
+                                                                msg = "S1=" + (s1?"1":"0") + " S2=" + (s2?"1":"0") + " S3=" + (s3?"1":"0") + " [OK]     [75%]";
+                                                                parte1.addExtra(msg);
+                                                                parte1.setColor(ChatColor.YELLOW);
+                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                // Si está bien hacemos siguiente comprobación
+                                                                // Movemos Palancas Con Un Retardo
+                                                                Bukkit.getScheduler().runTaskLater(getPluginGabri(), () -> {
+                                                                    // Movemos Palancas
+                                                                    setLever(inA, true);
+                                                                    setLever(inB, true);
+
+                                                                    // Dejamos un tiempo para que se cambien las palancas
+                                                                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                                                                        parte1.getExtra().clear();
+                                                                        parte1.setText("->");
+
+                                                                        parte1.addExtra("A=1 y B=1 ");
+                                                                        parte1.setColor(ChatColor.YELLOW);
+
+                                                                        Bukkit.getScheduler().runTaskLater(this, () -> {
+
+                                                                            s1 = (((Lightable) out1.getBlockData()).isLit()) ? true : false;
+                                                                            s2 = (((Lightable) out2.getBlockData()).isLit()) ? true : false;
+                                                                            s3 = (((Lightable) out3.getBlockData()).isLit()) ? true : false;
+                                                                            if (!s1 && s2 && !s3) {
+                                                                                parte1.addExtra(" ");
+                                                                                msg = "S1=" + (s1 ? "1" : "0") + " S2=" + (s2 ? "1" : "0") + " S3=" + (s3 ? "1" : "0") + " [OK]     [100%]";
+                                                                                parte1.addExtra(msg);
+                                                                                parte1.setColor(ChatColor.YELLOW);
+                                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                                parte1.getExtra().clear();
+                                                                                parte1.setText("");
+                                                                                parte1.addExtra("Ejercicio Correcto ");
+                                                                                parte1.setColor(ChatColor.BLUE);
+                                                                                parte1.setBold(true);
+
+
+                                                                                parte2.setText("");
+                                                                                parte2.addExtra("[Puerta Abierta]");
+                                                                                parte2.setColor(ChatColor.GOLD);
+
+                                                                                Block puerta = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(47, -60, -96);
+                                                                                Openable openable = (Openable) puerta.getBlockData();
+                                                                                openable.setOpen(true); // Establecer la puerta como abierta
+                                                                                puerta.setBlockData(openable);
+
+                                                                                guardarProgreso(event.getPlayer(), 3);
+
+                                                                                parte1.addExtra(parte2);
+                                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+
+                                                                            } else {
+                                                                                parte1.addExtra(" ");
+                                                                                msg = "(A>B)-" + (s1?"1":"0") + " (a=b)=" + (s2?"1":"0") + " (A<B)=" + (s3?"1":"0") + " [ERROR]";
+                                                                                parte1.addExtra(msg);
+                                                                                parte1.setColor(ChatColor.RED);
+                                                                                event.getPlayer().spigot().sendMessage(parte1);
+                                                                            }
+
+                                                                        }, 20L);
+
+                                                                    },10L);
+
+                                                                }, 20L);
+
+                                                            }
+
+                                                        }, 10L);
+
+                                                    }, 20L);
+
+                                                }, 20L);
+
+                                            }
+
+                                        }, 10L);
+
+                                    }, 20L);
+
+                                }, 20L);
+
+                            }
+
+                        }, 10L);
+
+                    }, 20L);
+
+                }, 10L);
+            }
+        }
+
+    }
 }
