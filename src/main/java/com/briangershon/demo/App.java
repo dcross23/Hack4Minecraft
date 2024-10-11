@@ -240,6 +240,13 @@ public class App extends JavaPlugin implements Listener {
 
         }else if (event.getPlayer().getWorld().getName().contains("Ejercicio3")){
             checkEjercicio3(event);
+
+        }else if (event.getPlayer().getWorld().getName().contains("Ejercicio4")){
+            checkEjercicio4(event);
+
+        }else if (event.getPlayer().getWorld().getName().contains("Ejercicio5")){
+            checkEjercicio5(event);
+
         }
 
     }
@@ -473,7 +480,129 @@ public class App extends JavaPlugin implements Listener {
             // Teletransportar al jugador al nuevo mundo
             teleportPlayerToNewWorld(player, newWorld);
 
-        }else {
+        }
+
+
+//PORTALES A EJERCICIO 4
+/*
+        else if ( (int) portalLocation.getX() == 52 && ((int) portalLocation.getY() == -57  || (int) portalLocation.getY() == -56) && ((int) portalLocation.getZ() == 115 || (int) portalLocation.getZ() == 116) && event.getPlayer().getWorld().getName().contains("world")) {
+            // PORTAL A LECCION 4
+            if (obtenerNivel(player) < 3){
+                // Crear el primer componente de texto
+                TextComponent parte1 = new TextComponent("Teletransportando ....");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Envía un mensaje al jugador (opcional)
+                TextComponent parte2 = new TextComponent("'Haz Primero Los Ejercicios Mas Fáciles!");
+                parte2.setColor(ChatColor.GREEN);
+                parte2.setBold(true);
+
+                parte1.addExtra(parte2);
+
+                player.spigot().sendMessage(parte1);
+
+            } else{
+                TextComponent parte1 = new TextComponent("Teletransportando al....");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Envía un mensaje al jugador (opcional)
+                TextComponent parte2 = new TextComponent(" Ejercicio4!");
+                parte2.setColor(ChatColor.GREEN);
+                parte2.setBold(true);
+
+                parte1.addExtra(parte2);
+
+                player.spigot().sendMessage(parte1);
+
+                //Clonamos Mundo
+                cloneWorldForPlayer(player,"plantillaEjercicio4");
+            }
+
+        }
+
+        else if ((int)portalLocation.getX() == 53 && ((int)portalLocation.getY() == -59 || (int)portalLocation.getY() == -60) && (int)portalLocation.getZ() == -95 && event.getPlayer().getWorld().getName().contains("Ejercicio4")) {
+            // PORTAL DE LECCION 4 A BASE
+            World newWorld = Bukkit.getWorld("world");
+
+            TextComponent parte1 = new TextComponent("Teletransportando ....");
+            parte1.setColor(ChatColor.BLUE);
+
+            // Envía un mensaje al jugador (opcional)
+            TextComponent parte2 = new TextComponent(" Volviendo a Base!");
+            parte2.setColor(ChatColor.GREEN);
+            parte2.setBold(true);
+
+            parte1.addExtra(parte2);
+
+            player.spigot().sendMessage(parte1);
+
+            // Teletransportar al jugador al nuevo mundo
+            teleportPlayerToNewWorld(player, newWorld);
+
+        }
+*/
+
+
+//PORTALES A EJERCICIO 5
+/*
+        else if ( ((int) portalLocation.getX() == 39 || (int) portalLocation.getX() == 40 ) && ((int) portalLocation.getY() == -57  || (int) portalLocation.getY() == -56) && (int) portalLocation.getZ() == 128 && event.getPlayer().getWorld().getName().contains("world")) {
+            // PORTAL A LECCION 4
+            if (obtenerNivel(player) < 4){
+                // Crear el primer componente de texto
+                TextComponent parte1 = new TextComponent("Teletransportando ....");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Envía un mensaje al jugador (opcional)
+                TextComponent parte2 = new TextComponent("'Haz Primero Los Ejercicios Mas Fáciles!");
+                parte2.setColor(ChatColor.GREEN);
+                parte2.setBold(true);
+
+                parte1.addExtra(parte2);
+
+                player.spigot().sendMessage(parte1);
+
+            } else{
+                TextComponent parte1 = new TextComponent("Teletransportando al....");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Envía un mensaje al jugador (opcional)
+                TextComponent parte2 = new TextComponent(" Ejercicio5!");
+                parte2.setColor(ChatColor.GREEN);
+                parte2.setBold(true);
+
+                parte1.addExtra(parte2);
+
+                player.spigot().sendMessage(parte1);
+
+                //Clonamos Mundo
+                cloneWorldForPlayer(player,"plantillaEjercicio5");
+            }
+
+        }
+
+        else if ((int)portalLocation.getX() == 53 && ((int)portalLocation.getY() == -59 || (int)portalLocation.getY() == -60) && (int)portalLocation.getZ() == -95 && event.getPlayer().getWorld().getName().contains("Ejercicio5")) {
+            // PORTAL DE LECCION 5 A BASE
+            World newWorld = Bukkit.getWorld("world");
+
+            TextComponent parte1 = new TextComponent("Teletransportando ....");
+            parte1.setColor(ChatColor.BLUE);
+
+            // Envía un mensaje al jugador (opcional)
+            TextComponent parte2 = new TextComponent(" Volviendo a Base!");
+            parte2.setColor(ChatColor.GREEN);
+            parte2.setBold(true);
+
+            parte1.addExtra(parte2);
+
+            player.spigot().sendMessage(parte1);
+
+            // Teletransportar al jugador al nuevo mundo
+            teleportPlayerToNewWorld(player, newWorld);
+
+        }
+*/
+
+        else {
 
                 TextComponent parte1 = new TextComponent("No te impacientes ....");
                 parte1.setColor(ChatColor.BLUE);
@@ -1327,6 +1456,646 @@ public class App extends JavaPlugin implements Listener {
 
                                                             }
 
+                                                        }, 10L);
+
+                                                    }, 20L);
+
+                                                }, 20L);
+
+                                            }
+
+                                        }, 10L);
+
+                                    }, 20L);
+
+                                }, 20L);
+
+                            }
+
+                        }, 10L);
+
+                    }, 20L);
+
+                }, 10L);
+            }
+        }
+
+    }
+
+    public void checkEjercicio4(PlayerInteractEvent event) {
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            Block block = event.getClickedBlock();
+            // El boton comprobar de la puerta AND del primer recinto
+            if (block != null && (block.getType() == Material.WARPED_BUTTON)
+                    && (block.getX() == 27 && block.getY() == -60 && block.getZ() == -96)) {
+
+                // Crear el primer componente de texto
+                TextComponent parte1 = new TextComponent("¡Comprobando Circuito Semi sumador ---> ");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Crear el segundo componente de texto
+                TextComponent parte2 = new TextComponent("¡ Se Paciente  !");
+                parte2.setColor(ChatColor.GOLD);
+                parte2.setBold(true);
+
+                parte1.addExtra(parte2);
+                event.getPlayer().spigot().sendMessage(parte1);
+
+                Block inA = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(27, -60, -97);
+                Block inB = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(27, -60, -95);
+
+                Block out1 = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(42, -59, -97);
+                Block out2 = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(42, -59, -95);
+
+                Bukkit.getScheduler().runTaskLater(this, () -> {
+                    // Movemos Palancas
+                    setLever(inA, false);
+                    setLever(inB, false);
+
+                    // Dejamos un tiempo para que se cambien las palancas
+                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                        parte1.getExtra().clear();
+                        parte1.setText("->");
+
+                        parte1.addExtra("E1=0 y E2=0 ");
+                        parte1.setColor(ChatColor.YELLOW);
+
+                        Bukkit.getScheduler().runTaskLater(this, () -> {
+                            s1 = (((Lightable) out1.getBlockData()).isLit()) ? true : false;
+                            s2 = (((Lightable) out2.getBlockData()).isLit()) ? true : false;
+
+                            if ( s1 || s2) {
+                                msg = "S=" + (s1?"1":"0") + "  C=" + (s2?"1":"0") + " [ERROR]";
+                                parte1.addExtra(msg);
+                                parte1.setColor(ChatColor.RED);
+                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                parte1.getExtra().clear();
+
+                                parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                parte1.setBold(true);
+                                event.getPlayer().spigot().sendMessage(parte1);
+
+                            } else {
+                                parte1.addExtra(" ");
+                                msg = "S=" + (s1?"1":"0") + "  C=" + (s2?"1":"0") + " [OK]     [25%]";
+                                parte1.addExtra(msg);
+                                parte1.setColor(ChatColor.YELLOW);
+                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                // Si está bien hacemos siguiente comprobación
+                                // Movemos Palancas Con Un Retardo
+                                Bukkit.getScheduler().runTaskLater(this, () -> {
+                                    // Movemos Palancas
+                                    setLever(inA, false);
+                                    setLever(inB, true);
+
+                                    // Dejamos un tiempo para que se cambien las palancas
+                                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                                        parte1.getExtra().clear();
+                                        parte1.setText("->");
+
+                                        parte1.addExtra("E1=0 y E2=1 ");
+                                        parte1.setColor(ChatColor.YELLOW);
+
+                                        Bukkit.getScheduler().runTaskLater(this, () -> {
+                                            s1 = (((Lightable) out1.getBlockData()).isLit()) ? true : false;
+                                            s2 = (((Lightable) out2.getBlockData()).isLit()) ? true : false;
+
+                                            if (!s1 || s2) {
+                                                msg = "S=" + (s1?"1":"0") + "  C=" + (s2?"1":"0") + " [ERROR]";
+                                                parte1.addExtra(msg);
+                                                parte1.setColor(ChatColor.RED);
+                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                parte1.getExtra().clear();
+
+                                                parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                                parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                                parte1.setBold(true);
+                                                event.getPlayer().spigot().sendMessage(parte1);
+                                            } else {
+                                                parte1.addExtra(" ");
+                                                msg = "S=" + (s1?"1":"0") + "  C=" + (s2?"1":"0") + " [OK]     [50%]";
+                                                parte1.addExtra(msg);
+                                                parte1.setColor(ChatColor.YELLOW);
+                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                // Si está bien hacemos siguiente comprobación
+                                                // Movemos Palancas Con Un Retardo
+                                                Bukkit.getScheduler().runTaskLater(getPluginGabri(), () -> {
+                                                    // Movemos Palancas
+                                                    setLever(inA, true);
+                                                    setLever(inB, false);
+
+                                                    // Dejamos un tiempo para que se cambien las palancas
+                                                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                                                        parte1.getExtra().clear();
+                                                        parte1.setText("->");
+
+                                                        parte1.addExtra("E1=1 y E2=0 ");
+                                                        parte1.setColor(ChatColor.YELLOW);
+
+                                                        Bukkit.getScheduler().runTaskLater(this, () -> {
+                                                            s1 = (((Lightable) out1.getBlockData()).isLit()) ? true : false;
+                                                            s2 = (((Lightable) out2.getBlockData()).isLit()) ? true : false;
+
+                                                            if (!s1 || s2) {
+                                                                msg = "S=" + (s1?"1":"0") + "  C=" + (s2?"1":"0") + " [ERROR]";
+                                                                parte1.addExtra(msg);
+                                                                parte1.setColor(ChatColor.RED);
+                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                parte1.getExtra().clear();
+
+                                                                parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                                                parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                                                parte1.setBold(true);
+                                                                event.getPlayer().spigot().sendMessage(parte1);
+                                                            } else {
+                                                                parte1.addExtra(" ");
+                                                                msg = "S=" + (s1?"1":"0") + "  C=" + (s2?"1":"0") + " [OK]     [75%]";
+                                                                parte1.addExtra(msg);
+                                                                parte1.setColor(ChatColor.YELLOW);
+                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                // Si está bien hacemos siguiente comprobación
+                                                                // Movemos Palancas Con Un Retardo
+                                                                Bukkit.getScheduler().runTaskLater(getPluginGabri(), () -> {
+                                                                    // Movemos Palancas
+                                                                    setLever(inA, true);
+                                                                    setLever(inB, true);
+
+                                                                    // Dejamos un tiempo para que se cambien las palancas
+                                                                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                                                                        parte1.getExtra().clear();
+                                                                        parte1.setText("->");
+
+                                                                        parte1.addExtra("E1=1 y E2=1 ");
+                                                                        parte1.setColor(ChatColor.YELLOW);
+
+                                                                        Bukkit.getScheduler().runTaskLater(this, () -> {
+
+                                                                            s1 = (((Lightable) out1.getBlockData()).isLit()) ? true : false;
+                                                                            s2 = (((Lightable) out2.getBlockData()).isLit()) ? true : false;
+
+                                                                            if (!s1 && s2) {
+                                                                                parte1.addExtra(" ");
+                                                                                msg = "S=" + (s1?"1":"0") + "  C=" + (s2?"1":"0") + " [OK]     [100%]";
+                                                                                parte1.addExtra(msg);
+                                                                                parte1.setColor(ChatColor.YELLOW);
+                                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                                parte1.getExtra().clear();
+                                                                                parte1.setText("");
+                                                                                parte1.addExtra("Ejercicio Correcto ");
+                                                                                parte1.setColor(ChatColor.BLUE);
+                                                                                parte1.setBold(true);
+
+
+                                                                                parte2.setText("");
+                                                                                parte2.addExtra("[Puerta Abierta]");
+                                                                                parte2.setColor(ChatColor.GOLD);
+
+                                                                                Block puerta = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(47, -60, -96);
+                                                                                Openable openable = (Openable) puerta.getBlockData();
+                                                                                openable.setOpen(true); // Establecer la puerta como abierta
+                                                                                puerta.setBlockData(openable);
+
+                                                                                guardarProgreso(event.getPlayer(), 4);
+
+                                                                                parte1.addExtra(parte2);
+                                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+
+                                                                            } else {
+                                                                                parte1.addExtra(" ");
+                                                                                msg = "S=" + (s1?"1":"0") + "  C=" + (s2?"1":"0") + " [OK]     [ERROR]";
+                                                                                parte1.addExtra(msg);
+                                                                                parte1.setColor(ChatColor.RED);
+                                                                                event.getPlayer().spigot().sendMessage(parte1);
+                                                                            }
+
+                                                                        }, 20L);
+
+                                                                    },10L);
+
+                                                                }, 20L);
+
+                                                            }
+
+                                                        }, 10L);
+
+                                                    }, 20L);
+
+                                                }, 20L);
+
+                                            }
+
+                                        }, 10L);
+
+                                    }, 20L);
+
+                                }, 20L);
+
+                            }
+
+                        }, 10L);
+
+                    }, 20L);
+
+                }, 10L);
+            }
+        }
+
+    }
+
+    public void checkEjercicio5(PlayerInteractEvent event) {
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            Block block = event.getClickedBlock();
+            // El boton comprobar de la puerta AND del primer recinto
+            if (block != null && (block.getType() == Material.WARPED_BUTTON)
+                    && (block.getX() == 25 && block.getY() == -60 && block.getZ() == -100)) {
+
+                // Crear el primer componente de texto
+                TextComponent parte1 = new TextComponent("¡Comprobando Circuito Sumador completo ---> ");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Crear el segundo componente de texto
+                TextComponent parte2 = new TextComponent("¡ Se Paciente  !");
+                parte2.setColor(ChatColor.GOLD);
+                parte2.setBold(true);
+
+                parte1.addExtra(parte2);
+                event.getPlayer().spigot().sendMessage(parte1);
+
+                Block inA = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(26, -60, -98);
+                Block inB = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(26, -60, -96);
+                Block inC = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(26, -60, -94);
+
+                Block out1 = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(42, -59, -97);
+                Block out2 = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(42, -59, -95);
+
+                Bukkit.getScheduler().runTaskLater(this, () -> {
+                    // Movemos Palancas
+                    setLever(inA, false);
+                    setLever(inB, false);
+                    setLever(inC, false);
+
+                    // Dejamos un tiempo para que se cambien las palancas
+                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                        parte1.getExtra().clear();
+                        parte1.setText("->");
+
+                        parte1.addExtra("Ci=0 E1=0 E2=0");
+                        parte1.setColor(ChatColor.YELLOW);
+
+                        Bukkit.getScheduler().runTaskLater(this, () -> {
+                            s1 = (((Lightable) out1.getBlockData()).isLit()) ? true : false;
+                            s2 = (((Lightable) out2.getBlockData()).isLit()) ? true : false;
+
+                            if (s1 || s2) {
+                                msg = "S=" + (s1?"1":"0") + "  Co=" + (s2?"1":"0") + " [ERROR]";
+                                parte1.addExtra(msg);
+                                parte1.setColor(ChatColor.RED);
+                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                parte1.getExtra().clear();
+
+                                parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                parte1.setBold(true);
+                                event.getPlayer().spigot().sendMessage(parte1);
+
+                            } else {
+                                parte1.addExtra(" ");
+                                msg = "S=" + (s1?"1":"0") + "  Co=" + (s2?"1":"0") + " [OK]     [12,5%]";
+                                parte1.addExtra(msg);
+                                parte1.setColor(ChatColor.YELLOW);
+                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                // Si está bien hacemos siguiente comprobación
+                                // Movemos Palancas Con Un Retardo
+                                Bukkit.getScheduler().runTaskLater(this, () -> {
+                                    // Movemos Palancas
+                                    setLever(inA, false);
+                                    setLever(inB, false);
+                                    setLever(inC, true);
+
+                                    // Dejamos un tiempo para que se cambien las palancas
+                                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                                        parte1.getExtra().clear();
+                                        parte1.setText("->");
+
+                                        parte1.addExtra("Ci=0 E1=0 E2=1");
+                                        parte1.setColor(ChatColor.YELLOW);
+
+                                        Bukkit.getScheduler().runTaskLater(this, () -> {
+                                            s1 = (((Lightable) out1.getBlockData()).isLit()) ? true : false;
+                                            s2 = (((Lightable) out2.getBlockData()).isLit()) ? true : false;
+
+                                            if (!s1 || s2) {
+                                                msg = "S=" + (s1?"1":"0") + "  Co=" + (s2?"1":"0") + " [ERROR]";
+                                                parte1.addExtra(msg);
+                                                parte1.setColor(ChatColor.RED);
+                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                parte1.getExtra().clear();
+
+                                                parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                                parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                                parte1.setBold(true);
+                                                event.getPlayer().spigot().sendMessage(parte1);
+                                            } else {
+                                                parte1.addExtra(" ");
+                                                msg = "S=" + (s1?"1":"0") + "  Co=" + (s2?"1":"0") + " [OK]     [25%]";
+                                                parte1.addExtra(msg);
+                                                parte1.setColor(ChatColor.YELLOW);
+                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                // Si está bien hacemos siguiente comprobación
+                                                // Movemos Palancas Con Un Retardo
+                                                Bukkit.getScheduler().runTaskLater(getPluginGabri(), () -> {
+                                                    // Movemos Palancas
+                                                    setLever(inA, false);
+                                                    setLever(inB, true);
+                                                    setLever(inC, false);
+
+                                                    // Dejamos un tiempo para que se cambien las palancas
+                                                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                                                        parte1.getExtra().clear();
+                                                        parte1.setText("->");
+
+                                                        parte1.addExtra("Ci=0 E1=1 E2=0");
+                                                        parte1.setColor(ChatColor.YELLOW);
+
+                                                        Bukkit.getScheduler().runTaskLater(this, () -> {
+                                                            s1 = (((Lightable) out1.getBlockData()).isLit()) ? true : false;
+                                                            s2 = (((Lightable) out2.getBlockData()).isLit()) ? true : false;
+
+                                                            if (!s1 || s2) {
+                                                                msg = "S=" + (s1?"1":"0") + "  Co=" + (s2?"1":"0") + " [ERROR]";
+                                                                parte1.addExtra(msg);
+                                                                parte1.setColor(ChatColor.RED);
+                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                parte1.getExtra().clear();
+
+                                                                parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                                                parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                                                parte1.setBold(true);
+                                                                event.getPlayer().spigot().sendMessage(parte1);
+                                                            } else {
+                                                                parte1.addExtra(" ");
+                                                                msg = "S=" + (s1?"1":"0") + "  Co=" + (s2?"1":"0") + " [OK]     [37,5%]";
+                                                                parte1.addExtra(msg);
+                                                                parte1.setColor(ChatColor.YELLOW);
+                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                // Si está bien hacemos siguiente comprobación
+                                                                // Movemos Palancas Con Un Retardo
+                                                                Bukkit.getScheduler().runTaskLater(getPluginGabri(), () -> {
+                                                                    // Movemos Palancas
+                                                                    setLever(inA, false);
+                                                                    setLever(inB, true);
+                                                                    setLever(inC, true);
+
+                                                                    // Dejamos un tiempo para que se cambien las palancas
+                                                                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                                                                        parte1.getExtra().clear();
+                                                                        parte1.setText("->");
+
+                                                                        parte1.addExtra("Ci=0 E1=1 E2=1");
+                                                                        parte1.setColor(ChatColor.YELLOW);
+
+                                                                        Bukkit.getScheduler().runTaskLater(this, () -> {
+
+                                                                            s1 = (((Lightable) out1.getBlockData()).isLit()) ? true : false;
+                                                                            s2 = (((Lightable) out2.getBlockData()).isLit()) ? true : false;
+
+                                                                            if (s1 || !s2) {
+                                                                                msg = "S=" + (s1?"1":"0") + "  Co=" + (s2?"1":"0") + " [ERROR]";
+                                                                                parte1.addExtra(msg);
+                                                                                parte1.setColor(ChatColor.RED);
+                                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                                parte1.getExtra().clear();
+
+                                                                                parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                                                                parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                                                                parte1.setBold(true);
+                                                                                event.getPlayer().spigot().sendMessage(parte1);
+                                                                            } else {
+                                                                                parte1.addExtra(" ");
+                                                                                msg = "S=" + (s1 ? "1" : "0") + "  Co=" + (s2 ? "1" : "0") + " [OK]     [50%]";
+                                                                                parte1.addExtra(msg);
+                                                                                parte1.setColor(ChatColor.YELLOW);
+                                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                                Bukkit.getScheduler().runTaskLater(getPluginGabri(), () -> {
+                                                                                    // Movemos Palancas
+                                                                                    setLever(inA, true);
+                                                                                    setLever(inB, false);
+                                                                                    setLever(inC, false);
+
+                                                                                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                                                                                        parte1.getExtra().clear();
+                                                                                        parte1.setText("->");
+
+                                                                                        parte1.addExtra("Ci=1 E1=0 E2=0");
+                                                                                        parte1.setColor(ChatColor.YELLOW);
+
+                                                                                        Bukkit.getScheduler().runTaskLater(this, () -> {
+
+                                                                                            s1 = (((Lightable) out1.getBlockData()).isLit()) ? true : false;
+                                                                                            s2 = (((Lightable) out2.getBlockData()).isLit()) ? true : false;
+
+                                                                                            if (!s1 || s2) {
+                                                                                                msg = "S=" + (s1 ? "1" : "0") + "  Co=" + (s2 ? "1" : "0") + " [ERROR]";
+                                                                                                parte1.addExtra(msg);
+                                                                                                parte1.setColor(ChatColor.RED);
+                                                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                                                parte1.getExtra().clear();
+
+                                                                                                parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                                                                                parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                                                                                parte1.setBold(true);
+                                                                                                event.getPlayer().spigot().sendMessage(parte1);
+                                                                                            } else {
+                                                                                                parte1.addExtra(" ");
+                                                                                                msg = "S=" + (s1 ? "1" : "0") + "  Co=" + (s2 ? "1" : "0") + " [OK]     [62,5%]";
+                                                                                                parte1.addExtra(msg);
+                                                                                                parte1.setColor(ChatColor.YELLOW);
+                                                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                                                Bukkit.getScheduler().runTaskLater(getPluginGabri(), () -> {
+                                                                                                    // Movemos Palancas
+                                                                                                    setLever(inA, true);
+                                                                                                    setLever(inB, false);
+                                                                                                    setLever(inC, true);
+
+                                                                                                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                                                                                                        parte1.getExtra().clear();
+                                                                                                        parte1.setText("->");
+
+                                                                                                        parte1.addExtra("Ci=1 E1=0 E2=1");
+                                                                                                        parte1.setColor(ChatColor.YELLOW);
+
+                                                                                                        Bukkit.getScheduler().runTaskLater(this, () -> {
+
+                                                                                                            s1 = (((Lightable) out1.getBlockData()).isLit()) ? true : false;
+                                                                                                            s2 = (((Lightable) out2.getBlockData()).isLit()) ? true : false;
+
+                                                                                                            if (s1 || !s2) {
+                                                                                                                msg = "S=" + (s1 ? "1" : "0") + "  Co=" + (s2 ? "1" : "0") + " [ERROR]";
+                                                                                                                parte1.addExtra(msg);
+                                                                                                                parte1.setColor(ChatColor.RED);
+                                                                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                                                                parte1.getExtra().clear();
+
+                                                                                                                parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                                                                                                parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                                                                                                parte1.setBold(true);
+                                                                                                                event.getPlayer().spigot().sendMessage(parte1);
+                                                                                                            } else {
+                                                                                                                parte1.addExtra(" ");
+                                                                                                                msg = "S=" + (s1 ? "1" : "0") + "  Co=" + (s2 ? "1" : "0") + " [OK]     [75%]";
+                                                                                                                parte1.addExtra(msg);
+                                                                                                                parte1.setColor(ChatColor.YELLOW);
+                                                                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                                                                Bukkit.getScheduler().runTaskLater(getPluginGabri(), () -> {
+                                                                                                                    // Movemos Palancas
+                                                                                                                    setLever(inA, true);
+                                                                                                                    setLever(inB, true);
+                                                                                                                    setLever(inC, false);
+
+                                                                                                                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                                                                                                                        parte1.getExtra().clear();
+                                                                                                                        parte1.setText("->");
+
+                                                                                                                        parte1.addExtra("Ci=1 E1=1 E2=0");
+                                                                                                                        parte1.setColor(ChatColor.YELLOW);
+
+                                                                                                                        Bukkit.getScheduler().runTaskLater(this, () -> {
+
+                                                                                                                            s1 = (((Lightable) out1.getBlockData()).isLit()) ? true : false;
+                                                                                                                            s2 = (((Lightable) out2.getBlockData()).isLit()) ? true : false;
+
+                                                                                                                            if (s1 || !s2) {
+                                                                                                                                msg = "S=" + (s1 ? "1" : "0") + "  Co=" + (s2 ? "1" : "0") + " [ERROR]";
+                                                                                                                                parte1.addExtra(msg);
+                                                                                                                                parte1.setColor(ChatColor.RED);
+                                                                                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                                                                                parte1.getExtra().clear();
+
+                                                                                                                                parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                                                                                                                parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                                                                                                                parte1.setBold(true);
+                                                                                                                                event.getPlayer().spigot().sendMessage(parte1);
+                                                                                                                            } else {
+                                                                                                                                parte1.addExtra(" ");
+                                                                                                                                msg = "S=" + (s1 ? "1" : "0") + "  Co=" + (s2 ? "1" : "0") + " [OK]     [87,5%]";
+                                                                                                                                parte1.addExtra(msg);
+                                                                                                                                parte1.setColor(ChatColor.YELLOW);
+                                                                                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                                                                                Bukkit.getScheduler().runTaskLater(getPluginGabri(), () -> {
+                                                                                                                                    // Movemos Palancas
+                                                                                                                                    setLever(inA, true);
+                                                                                                                                    setLever(inB, true);
+                                                                                                                                    setLever(inC, true);
+
+                                                                                                                                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                                                                                                                                        parte1.getExtra().clear();
+                                                                                                                                        parte1.setText("->");
+
+                                                                                                                                        parte1.addExtra("Ci=1 E1=1 E2=1");
+                                                                                                                                        parte1.setColor(ChatColor.YELLOW);
+
+                                                                                                                                        Bukkit.getScheduler().runTaskLater(this, () -> {
+
+                                                                                                                                            s1 = (((Lightable) out1.getBlockData()).isLit()) ? true : false;
+                                                                                                                                            s2 = (((Lightable) out2.getBlockData()).isLit()) ? true : false;
+
+                                                                                                                                            if (!s1 || !s2) {
+                                                                                                                                                msg = "S=" + (s1 ? "1" : "0") + "  Co=" + (s2 ? "1" : "0") + " [ERROR]";
+                                                                                                                                                parte1.addExtra(msg);
+                                                                                                                                                parte1.setColor(ChatColor.RED);
+                                                                                                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                                                                                                parte1.getExtra().clear();
+
+                                                                                                                                                parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                                                                                                                                parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                                                                                                                                parte1.setBold(true);
+                                                                                                                                                event.getPlayer().spigot().sendMessage(parte1);
+                                                                                                                                            } else {
+                                                                                                                                                parte1.addExtra(" ");
+                                                                                                                                                msg = "S=" + (s1?"1":"0") + "  Co=" + (s2?"1":"0") + " [OK]     [100%]";
+                                                                                                                                                parte1.addExtra(msg);
+                                                                                                                                                parte1.setColor(ChatColor.YELLOW);
+                                                                                                                                                event.getPlayer().spigot().sendMessage(parte1);
+
+                                                                                                                                                parte1.getExtra().clear();
+                                                                                                                                                parte1.setText("");
+                                                                                                                                                parte1.addExtra("Ejercicio Correcto ");
+                                                                                                                                                parte1.setColor(ChatColor.BLUE);
+                                                                                                                                                parte1.setBold(true);
+
+
+                                                                                                                                                parte2.setText("");
+                                                                                                                                                parte2.addExtra("[Puerta Abierta]");
+                                                                                                                                                parte2.setColor(ChatColor.GOLD);
+
+                                                                                                                                                Block puerta = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(47, -60, -96);
+                                                                                                                                                Openable openable = (Openable) puerta.getBlockData();
+                                                                                                                                                openable.setOpen(true); // Establecer la puerta como abierta
+                                                                                                                                                puerta.setBlockData(openable);
+
+                                                                                                                                                guardarProgreso(event.getPlayer(), 5);
+
+                                                                                                                                                parte1.addExtra(parte2);
+                                                                                                                                                event.getPlayer().spigot().sendMessage(parte1);
+                                                                                                                                            }
+                                                                                                                                        }, 20L);
+
+
+                                                                                                                                    },10L);
+
+
+                                                                                                                                }, 20L);
+                                                                                                                            }
+                                                                                                                        }, 20L);
+
+                                                                                                                    }, 10L);
+
+                                                                                                                },20L);
+
+                                                                                                            }
+                                                                                                        },20L);
+                                                                                                    },10L);
+
+                                                                                                },20L);
+
+                                                                                            }
+                                                                                        },20L);
+
+
+                                                                                    },10L);
+                                                                                }, 20L);
+                                                                            }
+
+                                                                        }, 20L);
+
+                                                                    },10L);
+
+                                                                }, 20L);
+                                                            }
                                                         }, 10L);
 
                                                     }, 20L);
