@@ -6,6 +6,8 @@ import net.md_5.bungee.api.chat.TextComponent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -53,8 +55,15 @@ public class App extends JavaPlugin implements Listener {
         return plugin;
     }
 
-    private boolean s1, s2, s3;
+
+    private BlockFace direccionPalancas;
+    private boolean s1, s2, s3, y;
     private String msg;
+
+    private AtomicInteger contador = new AtomicInteger(0);
+    private Runnable tareaComprobacion;
+    private double porcentaje;
+    private String porcentajeStr;
 
     @Override
     public void onEnable() {
@@ -211,7 +220,7 @@ public class App extends JavaPlugin implements Listener {
 
             Powerable data = (Powerable) block.getBlockData();
             Directional directional = (Directional) data;
-            ((Directional) data).setFacing(BlockFace.WEST);
+            ((Directional) data).setFacing(direccionPalancas);
             data.setPowered(state);
             block.setBlockData(data);
 
@@ -225,6 +234,7 @@ public class App extends JavaPlugin implements Listener {
             st.update(true);
         }
     }
+
 
     
     // Detectar cuando un jugador interactúa con un bloque
@@ -482,7 +492,6 @@ public class App extends JavaPlugin implements Listener {
 
         }
 
-
 //PORTALES A EJERCICIO 4
 /*
         else if ( (int) portalLocation.getX() == 52 && ((int) portalLocation.getY() == -57  || (int) portalLocation.getY() == -56) && ((int) portalLocation.getZ() == 115 || (int) portalLocation.getZ() == 116) && event.getPlayer().getWorld().getName().contains("world")) {
@@ -520,7 +529,7 @@ public class App extends JavaPlugin implements Listener {
 
         }
 
-        else if ((int)portalLocation.getX() == 53 && ((int)portalLocation.getY() == -59 || (int)portalLocation.getY() == -60) && (int)portalLocation.getZ() == -95 && event.getPlayer().getWorld().getName().contains("Ejercicio4")) {
+        else if ((int)portalLocation.getX() == -94 && ((int)portalLocation.getY() == -54 || (int)portalLocation.getY() == -55) && (int)portalLocation.getZ() == 0 && event.getPlayer().getWorld().getName().contains("Ejercicio4")) {
             // PORTAL DE LECCION 4 A BASE
             World newWorld = Bukkit.getWorld("world");
 
@@ -543,11 +552,12 @@ public class App extends JavaPlugin implements Listener {
 */
 
 
+
 //PORTALES A EJERCICIO 5
 /*
         else if ( ((int) portalLocation.getX() == 39 || (int) portalLocation.getX() == 40 ) && ((int) portalLocation.getY() == -57  || (int) portalLocation.getY() == -56) && (int) portalLocation.getZ() == 128 && event.getPlayer().getWorld().getName().contains("world")) {
             // PORTAL A LECCION 4
-            if (obtenerNivel(player) < 4){
+            if (obtenerNivel(player) < 3){
                 // Crear el primer componente de texto
                 TextComponent parte1 = new TextComponent("Teletransportando ....");
                 parte1.setColor(ChatColor.BLUE);
@@ -581,6 +591,66 @@ public class App extends JavaPlugin implements Listener {
         }
 
         else if ((int)portalLocation.getX() == 53 && ((int)portalLocation.getY() == -59 || (int)portalLocation.getY() == -60) && (int)portalLocation.getZ() == -95 && event.getPlayer().getWorld().getName().contains("Ejercicio5")) {
+            // PORTAL DE LECCION 4 A BASE
+            World newWorld = Bukkit.getWorld("world");
+
+            TextComponent parte1 = new TextComponent("Teletransportando ....");
+            parte1.setColor(ChatColor.BLUE);
+
+            // Envía un mensaje al jugador (opcional)
+            TextComponent parte2 = new TextComponent(" Volviendo a Base!");
+            parte2.setColor(ChatColor.GREEN);
+            parte2.setBold(true);
+
+            parte1.addExtra(parte2);
+
+            player.spigot().sendMessage(parte1);
+
+            // Teletransportar al jugador al nuevo mundo
+            teleportPlayerToNewWorld(player, newWorld);
+
+        }
+*/
+
+
+//PORTALES A EJERCICIO 6
+/*
+        else if ( ((int) portalLocation.getX() == 18 || (int) portalLocation.getX() == 19 ) && ((int) portalLocation.getY() == -57  || (int) portalLocation.getY() == -56) && (int) portalLocation.getZ() == 128 && event.getPlayer().getWorld().getName().contains("world")) {
+            // PORTAL A LECCION 4
+            if (obtenerNivel(player) < 4){
+                // Crear el primer componente de texto
+                TextComponent parte1 = new TextComponent("Teletransportando ....");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Envía un mensaje al jugador (opcional)
+                TextComponent parte2 = new TextComponent("'Haz Primero Los Ejercicios Mas Fáciles!");
+                parte2.setColor(ChatColor.GREEN);
+                parte2.setBold(true);
+
+                parte1.addExtra(parte2);
+
+                player.spigot().sendMessage(parte1);
+
+            } else{
+                TextComponent parte1 = new TextComponent("Teletransportando al....");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Envía un mensaje al jugador (opcional)
+                TextComponent parte2 = new TextComponent(" Ejercicio6!");
+                parte2.setColor(ChatColor.GREEN);
+                parte2.setBold(true);
+
+                parte1.addExtra(parte2);
+
+                player.spigot().sendMessage(parte1);
+
+                //Clonamos Mundo
+                cloneWorldForPlayer(player,"plantillaEjercicio6");
+            }
+
+        }
+
+        else if ((int)portalLocation.getX() == 53 && ((int)portalLocation.getY() == -59 || (int)portalLocation.getY() == -60) && (int)portalLocation.getZ() == -95 && event.getPlayer().getWorld().getName().contains("Ejercicio6")) {
             // PORTAL DE LECCION 5 A BASE
             World newWorld = Bukkit.getWorld("world");
 
@@ -671,6 +741,8 @@ public class App extends JavaPlugin implements Listener {
 
                 parte1.addExtra(parte2);
                 event.getPlayer().spigot().sendMessage(parte1);
+
+                direccionPalancas = BlockFace.WEST;
 
                 Block inA = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(27, -60, -97);
                 Block inB = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(27, -60, -95);
@@ -876,7 +948,9 @@ public class App extends JavaPlugin implements Listener {
  
                 parte1.addExtra(parte2);
                 event.getPlayer().spigot().sendMessage(parte1);
- 
+
+                direccionPalancas = BlockFace.WEST;
+
                 Block inA = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(27, -60, -99);
                 Block inB = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(27, -60, -97);
                 Block inC = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(27, -60, -95);
@@ -1266,6 +1340,8 @@ public class App extends JavaPlugin implements Listener {
                 parte1.addExtra(parte2);
                 event.getPlayer().spigot().sendMessage(parte1);
 
+                direccionPalancas = BlockFace.WEST;
+
                 Block inA = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(27, -60, -97);
                 Block inB = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(27, -60, -95);
 
@@ -1482,7 +1558,415 @@ public class App extends JavaPlugin implements Listener {
 
     }
 
+    // Genera una combinación aleatoria
+    public static boolean[] generarCombinacionPalancas() {
+        Random random = new Random();
+        boolean[] arrayBooleano = new boolean[6];
+
+        for (int i = 0; i < arrayBooleano.length; i++) {
+            arrayBooleano[i] = random.nextBoolean(); // Genera true o false aleatoriamente
+        }
+
+        return arrayBooleano;
+    }
+
     public void checkEjercicio4(PlayerInteractEvent event) {
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            Block block = event.getClickedBlock();
+            // El boton comprobar de la puerta AND del primer recinto
+            if (block != null && (block.getType() == Material.WARPED_BUTTON)
+                    && (block.getX() == -48 && block.getY() == -60 && block.getZ() == 6)) {
+
+                // Crear el primer componente de texto
+                TextComponent parte1 = new TextComponent("¡Comprobando Circuito Multiplexor ---> ");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Crear el segundo componente de texto
+                TextComponent parte2 = new TextComponent("¡ Se Paciente  !");
+                parte2.setColor(ChatColor.GOLD);
+                parte2.setBold(true);
+
+                parte1.addExtra(parte2);
+                event.getPlayer().spigot().sendMessage(parte1);
+
+                direccionPalancas = BlockFace.EAST;
+
+                Block inD0 = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(-50, -60, 5);
+                Block inD1 = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(-50, -60, 3);
+                Block inD2 = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(-50, -60, 1);
+                Block inD3 = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(-50, -60, -1);
+                Block inS0 = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(-50, -60, -3);
+                Block inS1 = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(-50, -60, -5);
+
+                Block out = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(-80, -59, 0);
+
+
+                porcentaje = 12.5;
+                contador.set(0);
+
+                tareaComprobacion = new Runnable() {
+                    @Override
+                    public void run() {
+                        if (contador.get() >= 8) {
+                            // Si todas las iteraciones completaron exitosamente, mostramos el mensaje final.
+                            parte1.getExtra().clear();
+                            parte1.setText("");
+                            parte1.addExtra("Ejercicio Correcto ");
+                            parte1.setColor(ChatColor.BLUE);
+                            parte1.setBold(true);
+
+                            parte2.setText("");
+                            parte2.addExtra("[Puerta Abierta]");
+                            parte2.setColor(ChatColor.GOLD);
+
+                            Block puerta = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(-91, -54, 0);
+                            Openable openable = (Openable) puerta.getBlockData();
+                            openable.setOpen(true); // Establecer la puerta como abierta
+                            puerta.setBlockData(openable);
+
+                            guardarProgreso(event.getPlayer(), 4);
+
+                            parte1.addExtra(parte2);
+                            event.getPlayer().spigot().sendMessage(parte1);
+                            return;
+                        }
+
+                        // Genera una combinación aleatoria para probar
+                        boolean[] combinacion = generarCombinacionPalancas();
+
+                        // Movemos Palancas
+                        setLever(inD0, combinacion[0]);
+                        setLever(inD1, combinacion[1]);
+                        setLever(inD2, combinacion[2]);
+                        setLever(inD3, combinacion[3]);
+                        setLever(inS0, combinacion[4]);
+                        setLever(inS1, combinacion[5]);
+
+                        // Dejamos un tiempo para que se cambien las palancas
+                        Bukkit.getScheduler().runTaskLater(App.this, () -> {
+                            parte1.getExtra().clear();
+                            parte1.setText("->");
+
+                            msg = "D0=" + (combinacion[0] ? "1" : "0") + " D1=" + (combinacion[1] ? "1" : "0");
+                            msg += " D2=" + (combinacion[2] ? "1" : "0") + " D3=" + (combinacion[3] ? "1" : "0");
+                            msg += " S0=" + (combinacion[4] ? "1" : "0") + " S1=" + (combinacion[5] ? "1" : "0");
+                            parte1.addExtra(msg);
+                            parte1.setColor(ChatColor.YELLOW);
+
+                            // Dejamos un tiempo para leer el estado de la salida
+                            Bukkit.getScheduler().runTaskLater(App.this, () -> {
+                                y = (((Lightable) out.getBlockData()).isLit()) ? true : false;
+
+                                if(!combinacion[4] && !combinacion[5]){
+                                    // S0=0 S1=0 -> salida es D0
+
+                                    if(combinacion[0] == y){
+                                        porcentajeStr = String.format("%.1f%%", porcentaje);
+                                        porcentaje = porcentaje + 12.5;
+
+                                        parte1.addExtra(" ");
+                                        msg = "     D0=" + (combinacion[0] ? "1" : "0") + "  ==  Y=" + (y ? "1" : "0") + " [OK]     " + porcentajeStr;
+                                        parte1.addExtra(msg);
+                                        parte1.setColor(ChatColor.YELLOW);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                        contador.incrementAndGet();
+                                        Bukkit.getScheduler().runTaskLater(App.this, this, 20L);
+
+                                    }else{
+                                        msg = "     D0=" + (combinacion[0] ? "1" : "0") + "  !=  Y=" + (y ? "1" : "0") + " [ERROR]";
+                                        parte1.addExtra(msg);
+                                        parte1.setColor(ChatColor.RED);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                        parte1.getExtra().clear();
+
+                                        parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                        parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                        parte1.setBold(true);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+                                    }
+                                }
+                                else if(!combinacion[4] && combinacion[5]){
+                                    // S0=0 S1=1 -> salida es D2
+                                    if(combinacion[2] == y){
+                                        porcentajeStr = String.format("%.1f%%", porcentaje);
+                                        porcentaje = porcentaje + 12.5;
+
+                                        parte1.addExtra(" ");
+                                        msg = "     D2=" + (combinacion[2] ? "1" : "0") + "  ==  Y=" + (y ? "1" : "0") + " [OK]     " + porcentajeStr;
+                                        parte1.addExtra(msg);
+                                        parte1.setColor(ChatColor.YELLOW);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                        contador.incrementAndGet();
+                                        Bukkit.getScheduler().runTaskLater(App.this, this, 20L);
+
+                                    }else{
+                                        msg = "     D2=" + (combinacion[2] ? "1" : "0") + "  !=  Y=" + (y ? "1" : "0") + " [ERROR]";
+                                        parte1.addExtra(msg);
+                                        parte1.setColor(ChatColor.RED);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                        parte1.getExtra().clear();
+
+                                        parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                        parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                        parte1.setBold(true);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+                                    }
+                                }
+                                else if(combinacion[4] && !combinacion[5]){
+                                    // S0=1 S1=0 -> salida es D1
+                                    if(combinacion[1] == y){
+                                        porcentajeStr = String.format("%.1f%%", porcentaje);
+                                        porcentaje = porcentaje + 12.5;
+
+                                        parte1.addExtra(" ");
+                                        msg = "     D1=" + (combinacion[1] ? "1" : "0") + "  ==  Y=" + (y ? "1" : "0") + " [OK]     " + porcentajeStr;
+                                        parte1.addExtra(msg);
+                                        parte1.setColor(ChatColor.YELLOW);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                        contador.incrementAndGet();
+                                        Bukkit.getScheduler().runTaskLater(App.this, this, 20L);
+
+                                    }else{
+                                        msg = "     D1=" + (combinacion[1] ? "1" : "0") + "  !=  Y=" + (y ? "1" : "0") + " [ERROR]";
+                                        parte1.addExtra(msg);
+                                        parte1.setColor(ChatColor.RED);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                        parte1.getExtra().clear();
+
+                                        parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                        parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                        parte1.setBold(true);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+                                    }
+                                }
+                                else if(combinacion[4] && combinacion[5]){
+                                    // S0=1 S1=1 -> salida es D3
+                                    if(combinacion[3] == y){
+                                        porcentajeStr = String.format("%.1f%%", porcentaje);
+                                        porcentaje = porcentaje + 12.5;
+
+                                        parte1.addExtra(" ");
+                                        msg = "     D3=" + (combinacion[3] ? "1" : "0") + "  ==  Y=" + (y ? "1" : "0") + " [OK]     " + porcentajeStr;
+                                        parte1.addExtra(msg);
+                                        parte1.setColor(ChatColor.YELLOW);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                        contador.incrementAndGet();
+                                        Bukkit.getScheduler().runTaskLater(App.this, this, 20L);
+
+                                    }else{
+                                        msg = "     D3=" + (combinacion[3] ? "1" : "0") + "  !=  Y=" + (y ? "1" : "0") + " [ERROR]";
+                                        parte1.addExtra(msg);
+                                        parte1.setColor(ChatColor.RED);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                        parte1.getExtra().clear();
+
+                                        parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                        parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                        parte1.setBold(true);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+                                    }
+                                }
+                            }, 30L);
+
+                        }, 30L);
+                    }
+                };
+
+                Bukkit.getScheduler().runTaskLater(this, tareaComprobacion, 20L);
+
+                /*
+                for(contador=0; contador<iteracciones; contador++) {
+
+                    if(!estadoComprobacion)
+                        break;
+
+                    Bukkit.getScheduler().runTaskLater(this, () -> {
+                        //Genera una combinación aleatoria para probar
+                        boolean[] combinacion = generarCombinacionPalancas();
+
+                        // Movemos Palancas
+                        setLever(inD0, combinacion[0]);
+                        setLever(inD1, combinacion[1]);
+                        setLever(inD2, combinacion[2]);
+                        setLever(inD3, combinacion[3]);
+                        setLever(inS0, combinacion[4]);
+                        setLever(inS1, combinacion[5]);
+
+                        // Dejamos un tiempo para que se cambien las palancas
+                        Bukkit.getScheduler().runTaskLater(this, () -> {
+                            parte1.getExtra().clear();
+                            parte1.setText("->");
+
+                            msg = "D0=" + (combinacion[0] ? "1" : "0") + " D1=" + (combinacion[1] ? "1" : "0");
+                            msg += " D2=" + (combinacion[2] ? "1" : "0") + " D3=" + (combinacion[3] ? "1" : "0");
+                            msg += " S0=" + (combinacion[4] ? "1" : "0") + " S1=" + (combinacion[5] ? "1" : "0");
+                            parte1.addExtra(msg);
+                            parte1.setColor(ChatColor.YELLOW);
+                            parte1.getExtra().clear();
+
+                            Bukkit.getScheduler().runTaskLater(this, () -> {
+                                y = (((Lightable) out.getBlockData()).isLit()) ? true : false;
+
+                                if(!combinacion[4] && !combinacion[5]){
+                                // S0=0 S1=0 -> salida es D0
+
+                                    if(combinacion[0] == y){
+                                        porcentajeStr = String.format("%.1f%%", porcentaje);
+                                        porcentaje = porcentaje + 12.5;
+
+                                        parte1.addExtra(" ");
+                                        msg = "D0=" + (combinacion[0] ? "1" : "0") + "  !=  Y=" + (y ? "1" : "0") + " [OK]     " + porcentajeStr;
+                                        parte1.addExtra(msg);
+                                        parte1.setColor(ChatColor.YELLOW);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                    }else{
+                                        msg = "D0=" + (combinacion[0] ? "1" : "0") + "  !=  Y=" + (y ? "1" : "0") + " [ERROR]";
+                                        parte1.addExtra(msg);
+                                        parte1.setColor(ChatColor.RED);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                        parte1.getExtra().clear();
+
+                                        parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                        parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                        parte1.setBold(true);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                        estadoComprobacion = false;
+                                    }
+                                }
+                                else if(!combinacion[4] && combinacion[5]){
+                                // S0=0 S1=1 -> salida es D2
+                                    if(combinacion[2] == y){
+                                        porcentajeStr = String.format("%.1f%%", porcentaje);
+                                        porcentaje = porcentaje + 12.5;
+
+                                        parte1.addExtra(" ");
+                                        msg = "D2=" + (combinacion[0] ? "1" : "0") + "  !=  Y=" + (y ? "1" : "0") + " [OK]     " + porcentajeStr;
+                                        parte1.addExtra(msg);
+                                        parte1.setColor(ChatColor.YELLOW);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                    }else{
+                                        msg = "D2=" + (combinacion[0] ? "1" : "0") + "  !=  Y=" + (y ? "1" : "0") + " [ERROR]";
+                                        parte1.addExtra(msg);
+                                        parte1.setColor(ChatColor.RED);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                        parte1.getExtra().clear();
+
+                                        parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                        parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                        parte1.setBold(true);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                        estadoComprobacion = false;
+                                    }
+                                }
+                                else if(combinacion[4] && !combinacion[5]){
+                                    // S0=1 S1=0 -> salida es D1
+                                    if(combinacion[1] == y){
+                                        porcentajeStr = String.format("%.1f%%", porcentaje);
+                                        porcentaje = porcentaje + 12.5;
+
+                                        parte1.addExtra(" ");
+                                        msg = "D1=" + (combinacion[0] ? "1" : "0") + "  !=  Y=" + (y ? "1" : "0") + " [OK]     " + porcentajeStr;
+                                        parte1.addExtra(msg);
+                                        parte1.setColor(ChatColor.YELLOW);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                    }else{
+                                        msg = "D1=" + (combinacion[0] ? "1" : "0") + "  !=  Y=" + (y ? "1" : "0") + " [ERROR]";
+                                        parte1.addExtra(msg);
+                                        parte1.setColor(ChatColor.RED);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                        parte1.getExtra().clear();
+
+                                        parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                        parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                        parte1.setBold(true);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                        estadoComprobacion = false;
+                                    }
+                                }
+                                else if(combinacion[4] && combinacion[5]){
+                                    // S0=1 S1=1 -> salida es D3
+                                    if(combinacion[3] == y){
+                                        porcentajeStr = String.format("%.1f%%", porcentaje);
+                                        porcentaje = porcentaje + 12.5;
+
+                                        parte1.addExtra(" ");
+                                        msg = "D3=" + (combinacion[0] ? "1" : "0") + "  !=  Y=" + (y ? "1" : "0") + " [OK]     " + porcentajeStr;
+                                        parte1.addExtra(msg);
+                                        parte1.setColor(ChatColor.YELLOW);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                    }else{
+                                        msg = "D3=" + (combinacion[0] ? "1" : "0") + "  !=  Y=" + (y ? "1" : "0") + " [ERROR]";
+                                        parte1.addExtra(msg);
+                                        parte1.setColor(ChatColor.RED);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                        parte1.getExtra().clear();
+
+                                        parte1.addExtra("!!CIRCUITO INVALIDO¡¡");
+                                        parte1.setColor(ChatColor.LIGHT_PURPLE);
+                                        parte1.setBold(true);
+                                        event.getPlayer().spigot().sendMessage(parte1);
+
+                                        estadoComprobacion = false;
+                                    }
+                                }
+
+                                //Si se llega al final y todo okay, se abre la puerta
+                                if(contador==iteracciones-1 && estadoComprobacion){
+                                    parte1.getExtra().clear();
+                                    parte1.setText("");
+                                    parte1.addExtra("Ejercicio Correcto ");
+                                    parte1.setColor(ChatColor.BLUE);
+                                    parte1.setBold(true);
+
+
+                                    parte2.setText("");
+                                    parte2.addExtra("[Puerta Abierta]");
+                                    parte2.setColor(ChatColor.GOLD);
+
+                                    Block puerta = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(-91, -54, 0);
+                                    Openable openable = (Openable) puerta.getBlockData();
+                                    openable.setOpen(true); // Establecer la puerta como abierta
+                                    puerta.setBlockData(openable);
+
+                                    guardarProgreso(event.getPlayer(), 4);
+
+                                    parte1.addExtra(parte2);
+                                    event.getPlayer().spigot().sendMessage(parte1);
+                                }
+
+                            }, 20L);
+
+                        }, 20L);
+
+                    }, contador * 20L);
+                }
+                */
+            }
+        }
+
+    }
+
+
+    public void checkEjercicio5(PlayerInteractEvent event) {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Block block = event.getClickedBlock();
             // El boton comprobar de la puerta AND del primer recinto
@@ -1500,6 +1984,8 @@ public class App extends JavaPlugin implements Listener {
 
                 parte1.addExtra(parte2);
                 event.getPlayer().spigot().sendMessage(parte1);
+
+                direccionPalancas = BlockFace.WEST;
 
                 Block inA = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(27, -60, -97);
                 Block inB = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(27, -60, -95);
@@ -1663,7 +2149,7 @@ public class App extends JavaPlugin implements Listener {
                                                                                 openable.setOpen(true); // Establecer la puerta como abierta
                                                                                 puerta.setBlockData(openable);
 
-                                                                                guardarProgreso(event.getPlayer(), 4);
+                                                                                guardarProgreso(event.getPlayer(), 5);
 
                                                                                 parte1.addExtra(parte2);
                                                                                 event.getPlayer().spigot().sendMessage(parte1);
@@ -1711,7 +2197,8 @@ public class App extends JavaPlugin implements Listener {
 
     }
 
-    public void checkEjercicio5(PlayerInteractEvent event) {
+
+    public void checkEjercicio6(PlayerInteractEvent event) {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Block block = event.getClickedBlock();
             // El boton comprobar de la puerta AND del primer recinto
@@ -1729,6 +2216,8 @@ public class App extends JavaPlugin implements Listener {
 
                 parte1.addExtra(parte2);
                 event.getPlayer().spigot().sendMessage(parte1);
+
+                direccionPalancas = BlockFace.WEST;
 
                 Block inA = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(26, -60, -98);
                 Block inB = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(26, -60, -96);
@@ -2057,7 +2546,7 @@ public class App extends JavaPlugin implements Listener {
                                                                                                                                                 openable.setOpen(true); // Establecer la puerta como abierta
                                                                                                                                                 puerta.setBlockData(openable);
 
-                                                                                                                                                guardarProgreso(event.getPlayer(), 5);
+                                                                                                                                                guardarProgreso(event.getPlayer(), 6);
 
                                                                                                                                                 parte1.addExtra(parte2);
                                                                                                                                                 event.getPlayer().spigot().sendMessage(parte1);
