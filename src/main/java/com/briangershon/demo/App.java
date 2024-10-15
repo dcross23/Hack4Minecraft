@@ -493,7 +493,7 @@ public class App extends JavaPlugin implements Listener {
         }
 
 //PORTALES A EJERCICIO 4
-/*
+
         else if ( (int) portalLocation.getX() == 52 && ((int) portalLocation.getY() == -57  || (int) portalLocation.getY() == -56) && ((int) portalLocation.getZ() == 115 || (int) portalLocation.getZ() == 116) && event.getPlayer().getWorld().getName().contains("world")) {
             // PORTAL A LECCION 4
             if (obtenerNivel(player) < 3){
@@ -529,7 +529,7 @@ public class App extends JavaPlugin implements Listener {
 
         }
 
-        else if ((int)portalLocation.getX() == -94 && ((int)portalLocation.getY() == -54 || (int)portalLocation.getY() == -55) && (int)portalLocation.getZ() == 0 && event.getPlayer().getWorld().getName().contains("Ejercicio4")) {
+        else if ((int)portalLocation.getX() == -93 && ((int)portalLocation.getY() == -54 || (int)portalLocation.getY() == -55) && (int)portalLocation.getZ() == 0 && event.getPlayer().getWorld().getName().contains("Ejercicio4")) {
             // PORTAL DE LECCION 4 A BASE
             World newWorld = Bukkit.getWorld("world");
 
@@ -547,9 +547,7 @@ public class App extends JavaPlugin implements Listener {
 
             // Teletransportar al jugador al nuevo mundo
             teleportPlayerToNewWorld(player, newWorld);
-
         }
-*/
 
 
 
