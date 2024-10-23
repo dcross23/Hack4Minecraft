@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
@@ -24,6 +25,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -194,7 +197,7 @@ public class App extends JavaPlugin implements Listener {
     }
 
      // Método para guardar un atributo personalizado (puntos) en el archivo de configuración
-     public void guardarProgreso(Player jugador, int level) {
+    public void guardarProgreso(Player jugador, int level) {
         FileConfiguration config = getConfig(); // Obtener la configuración actual
         String path = "jugadores." + jugador.getUniqueId().toString() + ".level"; // Ruta para los datos del jugador
         config.set(path, level); // Guardar los puntos en la ruta
@@ -256,6 +259,15 @@ public class App extends JavaPlugin implements Listener {
 
         }else if (event.getPlayer().getWorld().getName().contains("Ejercicio5")){
             checkEjercicio5(event);
+
+        }else if (event.getPlayer().getWorld().getName().contains("Ejercicio6")){
+            checkEjercicio6(event);
+
+        }else if (event.getPlayer().getWorld().getName().contains("Ejercicio9")){
+            checkEjercicioPrueba(event);
+
+        }else if (event.getPlayer().getWorld().getName().contains("Ejercicio10")){
+            checkEjercicioPrueba2(event);
 
         }
 
@@ -552,10 +564,9 @@ public class App extends JavaPlugin implements Listener {
 
 
 //PORTALES A EJERCICIO 5
-/*
         else if ( ((int) portalLocation.getX() == 39 || (int) portalLocation.getX() == 40 ) && ((int) portalLocation.getY() == -57  || (int) portalLocation.getY() == -56) && (int) portalLocation.getZ() == 128 && event.getPlayer().getWorld().getName().contains("world")) {
-            // PORTAL A LECCION 4
-            if (obtenerNivel(player) < 3){
+            // PORTAL A LECCION 5
+            if (obtenerNivel(player) < 4){
                 // Crear el primer componente de texto
                 TextComponent parte1 = new TextComponent("Teletransportando ....");
                 parte1.setColor(ChatColor.BLUE);
@@ -589,7 +600,7 @@ public class App extends JavaPlugin implements Listener {
         }
 
         else if ((int)portalLocation.getX() == 53 && ((int)portalLocation.getY() == -59 || (int)portalLocation.getY() == -60) && (int)portalLocation.getZ() == -95 && event.getPlayer().getWorld().getName().contains("Ejercicio5")) {
-            // PORTAL DE LECCION 4 A BASE
+            // PORTAL DE LECCION 5 A BASE
             World newWorld = Bukkit.getWorld("world");
 
             TextComponent parte1 = new TextComponent("Teletransportando ....");
@@ -608,14 +619,13 @@ public class App extends JavaPlugin implements Listener {
             teleportPlayerToNewWorld(player, newWorld);
 
         }
-*/
+
 
 
 //PORTALES A EJERCICIO 6
-/*
         else if ( ((int) portalLocation.getX() == 18 || (int) portalLocation.getX() == 19 ) && ((int) portalLocation.getY() == -57  || (int) portalLocation.getY() == -56) && (int) portalLocation.getZ() == 128 && event.getPlayer().getWorld().getName().contains("world")) {
-            // PORTAL A LECCION 4
-            if (obtenerNivel(player) < 4){
+            // PORTAL A LECCION 6
+            if (obtenerNivel(player) < 5){
                 // Crear el primer componente de texto
                 TextComponent parte1 = new TextComponent("Teletransportando ....");
                 parte1.setColor(ChatColor.BLUE);
@@ -649,7 +659,122 @@ public class App extends JavaPlugin implements Listener {
         }
 
         else if ((int)portalLocation.getX() == 53 && ((int)portalLocation.getY() == -59 || (int)portalLocation.getY() == -60) && (int)portalLocation.getZ() == -95 && event.getPlayer().getWorld().getName().contains("Ejercicio6")) {
-            // PORTAL DE LECCION 5 A BASE
+            // PORTAL DE LECCION 6 A BASE
+            World newWorld = Bukkit.getWorld("world");
+
+            TextComponent parte1 = new TextComponent("Teletransportando ....");
+            parte1.setColor(ChatColor.BLUE);
+
+            // Envía un mensaje al jugador (opcional)
+            TextComponent parte2 = new TextComponent(" Volviendo a Base!");
+            parte2.setColor(ChatColor.GREEN);
+            parte2.setBold(true);
+
+            parte1.addExtra(parte2);
+
+            player.spigot().sendMessage(parte1);
+
+            // Teletransportar al jugador al nuevo mundo
+            teleportPlayerToNewWorld(player, newWorld);
+
+        }
+
+//PORTALES EJERCICIO SUMA 1
+        else if ( (int) portalLocation.getX() == 6 && ((int) portalLocation.getY() == -57  || (int) portalLocation.getY() == -56) && ((int) portalLocation.getZ() == 115 || (int) portalLocation.getZ() == 116) && event.getPlayer().getWorld().getName().contains("world")) {
+
+            if (obtenerNivel(player) < 1){
+                // Crear el primer componente de texto
+                TextComponent parte1 = new TextComponent("Teletransportando ....");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Envía un mensaje al jugador (opcional)
+                TextComponent parte2 = new TextComponent("'Haz Primero Los Ejercicios Mas Fáciles!");
+                parte2.setColor(ChatColor.GREEN);
+                parte2.setBold(true);
+
+                parte1.addExtra(parte2);
+
+                player.spigot().sendMessage(parte1);
+
+            } else{
+                TextComponent parte1 = new TextComponent("Teletransportando al....");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Envía un mensaje al jugador (opcional)
+                TextComponent parte2 = new TextComponent(" Ejercicio Suma!");
+                parte2.setColor(ChatColor.GREEN);
+                parte2.setBold(true);
+
+                parte1.addExtra(parte2);
+
+                player.spigot().sendMessage(parte1);
+
+                //Clonamos Mundo
+                cloneWorldForPlayer(player,"plantillaEjercicio9");
+            }
+
+        }
+
+        else if ((int)portalLocation.getX() == 53 && ((int)portalLocation.getY() == -59 || (int)portalLocation.getY() == -60) && (int)portalLocation.getZ() == -95 && event.getPlayer().getWorld().getName().contains("Ejercicio9")) {
+            // PORTAL DE LECCION 6 A BASE
+            World newWorld = Bukkit.getWorld("world");
+
+            TextComponent parte1 = new TextComponent("Teletransportando ....");
+            parte1.setColor(ChatColor.BLUE);
+
+            // Envía un mensaje al jugador (opcional)
+            TextComponent parte2 = new TextComponent(" Volviendo a Base!");
+            parte2.setColor(ChatColor.GREEN);
+            parte2.setBold(true);
+
+            parte1.addExtra(parte2);
+
+            player.spigot().sendMessage(parte1);
+
+            // Teletransportar al jugador al nuevo mundo
+            teleportPlayerToNewWorld(player, newWorld);
+
+        }
+
+//PORTALES EJERCICIO RESTA
+/*
+        else if ( (int) portalLocation.getX() == 6 && ((int) portalLocation.getY() == -57  || (int) portalLocation.getY() == -56) && ((int) portalLocation.getZ() == 95 || (int) portalLocation.getZ() == 94) && event.getPlayer().getWorld().getName().contains("world")) {
+
+            if (obtenerNivel(player) < 1){
+                // Crear el primer componente de texto
+                TextComponent parte1 = new TextComponent("Teletransportando ....");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Envía un mensaje al jugador (opcional)
+                TextComponent parte2 = new TextComponent("'Haz Primero Los Ejercicios Mas Fáciles!");
+                parte2.setColor(ChatColor.GREEN);
+                parte2.setBold(true);
+
+                parte1.addExtra(parte2);
+
+                player.spigot().sendMessage(parte1);
+
+            } else{
+                TextComponent parte1 = new TextComponent("Teletransportando al....");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Envía un mensaje al jugador (opcional)
+                TextComponent parte2 = new TextComponent(" Ejercicio Suma!");
+                parte2.setColor(ChatColor.GREEN);
+                parte2.setBold(true);
+
+                parte1.addExtra(parte2);
+
+                player.spigot().sendMessage(parte1);
+
+                //Clonamos Mundo
+                cloneWorldForPlayer(player,"plantillaEjercicio10");
+            }
+
+        }
+
+        else if ((int)portalLocation.getX() == 53 && ((int)portalLocation.getY() == -59 || (int)portalLocation.getY() == -60) && (int)portalLocation.getZ() == -95 && event.getPlayer().getWorld().getName().contains("Ejercicio10")) {
+            // PORTAL DE LECCION 6 A BASE
             World newWorld = Bukkit.getWorld("world");
 
             TextComponent parte1 = new TextComponent("Teletransportando ....");
@@ -669,9 +794,7 @@ public class App extends JavaPlugin implements Listener {
 
         }
 */
-
         else {
-
                 TextComponent parte1 = new TextComponent("No te impacientes ....");
                 parte1.setColor(ChatColor.BLUE);
     
@@ -2217,7 +2340,7 @@ public class App extends JavaPlugin implements Listener {
 
                 direccionPalancas = BlockFace.WEST;
 
-                Block inA = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(26, -60, -98);
+                Block inA = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(26, -60  , -98);
                 Block inB = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(26, -60, -96);
                 Block inC = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(26, -60, -94);
 
@@ -2604,6 +2727,146 @@ public class App extends JavaPlugin implements Listener {
                     }, 20L);
 
                 }, 10L);
+            }
+        }
+
+    }
+
+
+
+    public void checkEjercicioPrueba(PlayerInteractEvent event) {
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            Block block = event.getClickedBlock();
+
+            if (block != null && (block.getType() == Material.WARPED_BUTTON)
+                    && (block.getX() == 41 && block.getY() == -60 && block.getZ() == -86)) {
+
+                // Crear el primer componente de texto
+                TextComponent parte1 = new TextComponent("¡Comprobando Suma ---> ");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Crear el segundo componente de texto
+                event.getPlayer().spigot().sendMessage(parte1);
+
+
+                Block cofre = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(42, -60, -89);
+
+                // Verificar si el bloque es un cofre
+                if (cofre.getState() instanceof Chest) {
+                    Chest chest = (Chest) cofre.getState();
+
+                    // Obtener el inventario del cofre
+                    Inventory chestInventory = chest.getBlockInventory();
+
+                    // Inicializar el contador de items
+                    int itemCount = 0;
+
+                    // Recorrer el inventario y contar los items no nulos
+                    for (ItemStack item : chestInventory.getContents()) {
+                        if (item != null) {
+                            itemCount += item.getAmount(); // Sumar la cantidad de ese stack
+                        }
+                    }
+
+
+                    if(itemCount == 10){
+                        TextComponent parte2 = new TextComponent("¡7 + 3 = "+itemCount+"!  [CORRECTO]");
+                        parte2.setColor(ChatColor.GOLD);
+                        parte2.setBold(true);
+                        event.getPlayer().spigot().sendMessage(parte2);
+
+                        Block puerta = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(47, -60, -96);
+                        Openable openable = (Openable) puerta.getBlockData();
+                        openable.setOpen(true);
+                        puerta.setBlockData(openable);
+
+                        parte2.setText("");
+                        parte2.addExtra("[Puerta Abierta]");
+                        parte2.setColor(ChatColor.AQUA);
+                        event.getPlayer().spigot().sendMessage(parte2);
+                    }else{
+                        TextComponent parte2 = new TextComponent("¡7 + 3 = "+itemCount+"!  [ERROR]");
+                        parte2.setColor(ChatColor.GOLD);
+                        parte2.setBold(true);
+                        event.getPlayer().spigot().sendMessage(parte2);
+                    }
+
+                } else {
+                    // No es un cofre, muestra un mensaje
+                    event.getPlayer().sendMessage("El bloque en la posición indicada no es un cofre.");
+                }
+
+            }
+        }
+
+    }
+
+    public void checkEjercicioPrueba2(PlayerInteractEvent event) {
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            Block block = event.getClickedBlock();
+
+            TextComponent parte = new TextComponent("aaaaaaaa");
+            parte.setColor(ChatColor.GOLD);
+            parte.setBold(true);
+
+            if (block != null && (block.getType() == Material.WARPED_BUTTON)
+                    && (block.getX() == 41 && block.getY() == -60 && block.getZ() == -86)) {
+
+                // Crear el primer componente de texto
+                TextComponent parte1 = new TextComponent("¡Comprobando Resta ---> ");
+                parte1.setColor(ChatColor.BLUE);
+
+                // Crear el segundo componente de texto
+                event.getPlayer().spigot().sendMessage(parte1);
+
+
+                Block cofre = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(42, -60, -89);
+
+                // Verificar si el bloque es un cofre
+                if (cofre.getState() instanceof Chest) {
+                    Chest chest = (Chest) cofre.getState();
+
+                    // Obtener el inventario del cofre
+                    Inventory chestInventory = chest.getBlockInventory();
+
+                    // Inicializar el contador de items
+                    int itemCount = 0;
+
+                    // Recorrer el inventario y contar los items no nulos
+                    for (ItemStack item : chestInventory.getContents()) {
+                        if (item != null) {
+                            itemCount += item.getAmount(); // Sumar la cantidad de ese stack
+                        }
+                    }
+
+
+                    if(itemCount == 7){
+                        TextComponent parte2 = new TextComponent("¡9 - 2 = "+itemCount+"!  [CORRECTO]");
+                        parte2.setColor(ChatColor.GOLD);
+                        parte2.setBold(true);
+                        event.getPlayer().spigot().sendMessage(parte2);
+
+                        Block puerta = Bukkit.getWorld(event.getPlayer().getWorld().getName()).getBlockAt(47, -60, -96);
+                        Openable openable = (Openable) puerta.getBlockData();
+                        openable.setOpen(true);
+                        puerta.setBlockData(openable);
+
+                        parte2.setText("");
+                        parte2.addExtra("[Puerta Abierta]");
+                        parte2.setColor(ChatColor.AQUA);
+                        event.getPlayer().spigot().sendMessage(parte2);
+                    }else{
+                        TextComponent parte2 = new TextComponent("¡9 - 2 = "+itemCount+"!  [ERROR]");
+                        parte2.setColor(ChatColor.GOLD);
+                        parte2.setBold(true);
+                        event.getPlayer().spigot().sendMessage(parte2);
+                    }
+
+                } else {
+                    // No es un cofre, muestra un mensaje
+                    event.getPlayer().sendMessage("El bloque en la posición indicada no es un cofre.");
+                }
+
             }
         }
 
